@@ -1,3 +1,5 @@
+'use strict';
+
 const path = require('path');
 const fs = require('fs');
 
@@ -10,40 +12,69 @@ fs.readdirSync(baseDocsDir).forEach((file) => {
     const content = fs.readFileSync(path.join(baseDocsDir, file), 'utf8');
     const functions = [];
     const functionRegex =
-      /##\s*Function\s*`([^`]+)`\s*\n```(?:\s*motoko (?:no-repl)?\s*\n)([\s\S]*?)```/g;
+      /\n##\s*Function\s*`([^`]+)`\s*\n```\s*motoko (?:no-repl)?\s*\nfunc ([\s\S]*?)```/g;
     let match;
     while ((match = functionRegex.exec(content)) !== null) {
-      const functionName = match[1].trim();
-      let functionDefinition = match[2].trim();
+      const name = match[1].trim();
+      let signature = match[2].trim();
 
-      functionDefinition = functionDefinition.replace(/^\s*/i, '');
+      signature = signature.replace(/^\s*/i, '');
       functions.push({
         module: moduleName,
-        name: functionName,
-        definition: functionDefinition,
+        name,
+        signature,
       });
     }
 
     const relevant = functions.flatMap((f) => {
-      const match = /(from|to)(\w+)/.exec(f.name);
+      const match = /^(from|to)([A-Z]\w*)/.exec(f.name);
       return match ? [{ ...f, type: match[1], other: match[2] }] : [];
     });
-    console.log(moduleName, relevant);
+    // console.log(moduleName, relevant);
     convertFunctions.push(...relevant);
   }
 });
 
+convertFunctions.forEach((f) =>
+  console.log(f.signature.replace(/^func /, `${f.module}.`)),
+);
+
+// Generate `/src/lib.json`
+const json = convertFunctions.map((f) => {
+  const from = f.type === 'from' ? f.other : f.module;
+  const to = f.type === 'from' ? f.module : f.other;
+  return {
+    from,
+    to,
+    module: f.module,
+    name: f.name,
+    signature: `${f.module}.${f.signature}`,
+  };
+});
+fs.writeFileSync(
+  path.join(__dirname, '../src/lib.json'),
+  JSON.stringify(json, null, 2),
+);
+
 // Generate `/src/lib.mo`
 const motokoSource = fs
-  .readFileSync(path.join(__dirname, 'ConvertTemplate.mo'), 'utf8')
-  .replace('/* {imports} */', '// TODO: imports')
+  .readFileSync(path.join(__dirname, 'Template.mo'), 'utf8')
+  .replace(
+    '/* {imports} */',
+    [...new Set(convertFunctions.map((f) => f.module))]
+      .sort()
+      .map((module) => `import ${module} "mo:base/${module}";`)
+      .join('\n'),
+  )
   .replace(/([ \t]*)\/\* {fields} \*\//, (_, indent) => {
-    return relevant
+    return convertFunctions
       .map((f) => {
         const from = f.type === 'from' ? f.other : f.module;
-        const to = f.type === 'to' ? f.module : f.other;
-        return `${indent}public func ${from}_${to}(from : ${from}) = ${f.module}.${f.name}(from);`;
+        const to = f.type === 'from' ? f.module : f.other;
+        // const signature = /\w+(.+)/.exec(f.signature)[1];
+        return `${indent}public let ${from}_${to} = ${f.module}.${f.name};`;
       })
+      .sort()
       .join('\n');
   });
 fs.writeFileSync(path.join(__dirname, '../src/lib.mo'), motokoSource);
