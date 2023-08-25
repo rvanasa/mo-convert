@@ -15,12 +15,16 @@ fs.readdirSync(baseDocsDir).forEach((file) => {
       let functionDefinition = match[2].trim();
 
       functionDefinition = functionDefinition.replace(/^\s*/i, '');
-      functions.push({ name: functionName, definition: functionDefinition });
+      functions.push({
+        module: path.basename(file, '.md'),
+        name: functionName,
+        definition: functionDefinition,
+      });
     }
 
-    relevant = functions.flatMap((f) => {
+    const relevant = functions.flatMap((f) => {
       const match = /(from|to)(\w+)/.exec(f.name);
-      return match ? [[{ ...f, dir: match[1], other: match[2] }]] : [];
+      return match ? [[{ ...f, type: match[1], other: match[2] }]] : [];
     });
 
     console.log(relevant);
