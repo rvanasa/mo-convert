@@ -30,7 +30,6 @@ fs.readdirSync(baseDocsDir).forEach((file) => {
       const match = /^(from|to)([A-Z]\w*)/.exec(f.name);
       return match ? [{ ...f, type: match[1], other: match[2] }] : [];
     });
-    // console.log(moduleName, relevant);
     convertFunctions.push(...relevant);
   }
 });
