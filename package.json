@@ -4,9 +4,11 @@
   "license": "MIT",
   "scripts": {
     "generate": "git submodule update && node ./generate && npm run format:mo",
-    "format:mo": "prettier --write \"src/**/*.{mo,json}\""
+    "format:mo": "prettier --write \"src/**/*.{mo,json}\"",
+    "postinstall": "mops install"
   },
   "devDependencies": {
+    "ic-mops": "^0.26.2",
     "prettier": "^3.0.2",
     "prettier-plugin-motoko": "^0.8.1"
   }

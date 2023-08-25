@@ -2,4 +2,4 @@
 
 module Convert {
   /* {fields} */
-}
+};

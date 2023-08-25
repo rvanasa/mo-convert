@@ -51,7 +51,7 @@ const json = convertFunctions.map((f) => {
   };
 });
 fs.writeFileSync(
-  path.join(__dirname, '../src/lib.json'),
+  path.join(__dirname, '../src/conversions.json'),
   JSON.stringify(json, null, 2),
 );
 

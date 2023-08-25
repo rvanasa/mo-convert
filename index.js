@@ -1,3 +1,3 @@
 'use strict';
 
-exports.conversions = require('./src/lib.json');
+exports.conversions = require('./src/conversions.json');
