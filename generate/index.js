@@ -1,8 +1,9 @@
 const path = require('path');
 const fs = require('fs');
 
+// Find conversion functions in base library docs
 const baseDocsDir = path.join(__dirname, '../submodules/motoko/doc/md/base');
-
+const convertFunctions = [];
 fs.readdirSync(baseDocsDir).forEach((file) => {
   if (file.endsWith('.md')) {
     const moduleName = path.basename(file, '.md');
@@ -27,22 +28,22 @@ fs.readdirSync(baseDocsDir).forEach((file) => {
       const match = /(from|to)(\w+)/.exec(f.name);
       return match ? [{ ...f, type: match[1], other: match[2] }] : [];
     });
-
     console.log(moduleName, relevant);
-
-    const convertModule = fs
-      .readFileSync(path.join(__dirname, 'ConvertTemplate.mo'), 'utf8')
-      .replace('/* {imports} */', '// TODO: imports')
-      .replace(/([ \t]*)\/\* {fields} \*\//, (_, indent) => {
-        return relevant
-          .map((f) => {
-            const from = f.type === 'from' ? f.other : f.module;
-            const to = f.type === 'to' ? f.module : f.other;
-            return `${indent}public func ${from}_${to}(from : ${from}) = ${f.module}.${f.name}(from);`;
-          })
-          .join('\n');
-      });
-
-    fs.writeFileSync(path.join(__dirname, '../src/lib.mo'), convertModule);
+    convertFunctions.push(...relevant);
   }
 });
+
+// Generate `/src/lib.mo`
+const motokoSource = fs
+  .readFileSync(path.join(__dirname, 'ConvertTemplate.mo'), 'utf8')
+  .replace('/* {imports} */', '// TODO: imports')
+  .replace(/([ \t]*)\/\* {fields} \*\//, (_, indent) => {
+    return relevant
+      .map((f) => {
+        const from = f.type === 'from' ? f.other : f.module;
+        const to = f.type === 'to' ? f.module : f.other;
+        return `${indent}public func ${from}_${to}(from : ${from}) = ${f.module}.${f.name}(from);`;
+      })
+      .join('\n');
+  });
+fs.writeFileSync(path.join(__dirname, '../src/lib.mo'), motokoSource);
