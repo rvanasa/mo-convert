@@ -1,0 +1,352 @@
+[
+  {
+    "from": "Array",
+    "to": "Blob",
+    "module": "Blob",
+    "name": "fromArray",
+    "signature": "Blob.fromArray(bytes : [Nat8]) : Blob"
+  },
+  {
+    "from": "ArrayMut",
+    "to": "Blob",
+    "module": "Blob",
+    "name": "fromArrayMut",
+    "signature": "Blob.fromArrayMut(bytes : [var Nat8]) : Blob"
+  },
+  {
+    "from": "Blob",
+    "to": "Array",
+    "module": "Blob",
+    "name": "toArray",
+    "signature": "Blob.toArray(blob : Blob) : [Nat8]"
+  },
+  {
+    "from": "Blob",
+    "to": "ArrayMut",
+    "module": "Blob",
+    "name": "toArrayMut",
+    "signature": "Blob.toArrayMut(blob : Blob) : [var Nat8]"
+  },
+  {
+    "from": "Bool",
+    "to": "Text",
+    "module": "Bool",
+    "name": "toText",
+    "signature": "Bool.toText(x : Bool) : Text"
+  },
+  {
+    "from": "Buffer",
+    "to": "Text",
+    "module": "Buffer",
+    "name": "toText",
+    "signature": "Buffer.toText<X>(buffer : Buffer<X>, toText : X -> Text) : Text"
+  },
+  {
+    "from": "Buffer",
+    "to": "Array",
+    "module": "Buffer",
+    "name": "toArray",
+    "signature": "Buffer.toArray<X>(buffer : Buffer<X>) : [X]"
+  },
+  {
+    "from": "Buffer",
+    "to": "VarArray",
+    "module": "Buffer",
+    "name": "toVarArray",
+    "signature": "Buffer.toVarArray<X>(buffer : Buffer<X>) : [var X]"
+  },
+  {
+    "from": "Array",
+    "to": "Buffer",
+    "module": "Buffer",
+    "name": "fromArray",
+    "signature": "Buffer.fromArray<X>(array : [X]) : Buffer<X>"
+  },
+  {
+    "from": "VarArray",
+    "to": "Buffer",
+    "module": "Buffer",
+    "name": "fromVarArray",
+    "signature": "Buffer.fromVarArray<X>(array : [var X]) : Buffer<X>"
+  },
+  {
+    "from": "Iter",
+    "to": "Buffer",
+    "module": "Buffer",
+    "name": "fromIter",
+    "signature": "Buffer.fromIter<X>(iter : { next : () -> ?X }) : Buffer<X>"
+  },
+  {
+    "from": "Iter",
+    "to": "HashMap",
+    "module": "HashMap",
+    "name": "fromIter",
+    "signature": "HashMap.fromIter<K, V>(iter : Iter.Iter<(K, V)>, initCapacity : Nat, keyEq : (K, K) -> Bool, keyHash : K -> Hash.Hash) : HashMap<K, V>"
+  },
+  {
+    "from": "Iter",
+    "to": "Heap",
+    "module": "Heap",
+    "name": "fromIter",
+    "signature": "Heap.fromIter<X>(iter : I.Iter<X>, compare : (X, X) -> O.Order) : Heap<X>"
+  },
+  {
+    "from": "Int",
+    "to": "Text",
+    "module": "Int",
+    "name": "toText",
+    "signature": "Int.toText(x : Int) : Text"
+  },
+  {
+    "from": "Int16",
+    "to": "Text",
+    "module": "Int16",
+    "name": "toText",
+    "signature": "Int16.toText(x : Int16) : Text"
+  },
+  {
+    "from": "Int32",
+    "to": "Text",
+    "module": "Int32",
+    "name": "toText",
+    "signature": "Int32.toText(x : Int32) : Text"
+  },
+  {
+    "from": "Int64",
+    "to": "Text",
+    "module": "Int64",
+    "name": "toText",
+    "signature": "Int64.toText(x : Int64) : Text"
+  },
+  {
+    "from": "Int8",
+    "to": "Text",
+    "module": "Int8",
+    "name": "toText",
+    "signature": "Int8.toText(x : Int8) : Text"
+  },
+  {
+    "from": "Array",
+    "to": "Iter",
+    "module": "Iter",
+    "name": "fromArray",
+    "signature": "Iter.fromArray<A>(xs : [A]) : Iter<A>"
+  },
+  {
+    "from": "ArrayMut",
+    "to": "Iter",
+    "module": "Iter",
+    "name": "fromArrayMut",
+    "signature": "Iter.fromArrayMut<A>(xs : [var A]) : Iter<A>"
+  },
+  {
+    "from": "Iter",
+    "to": "Array",
+    "module": "Iter",
+    "name": "toArray",
+    "signature": "Iter.toArray<A>(xs : Iter<A>) : [A]"
+  },
+  {
+    "from": "Iter",
+    "to": "ArrayMut",
+    "module": "Iter",
+    "name": "toArrayMut",
+    "signature": "Iter.toArrayMut<A>(xs : Iter<A>) : [var A]"
+  },
+  {
+    "from": "Iter",
+    "to": "List",
+    "module": "Iter",
+    "name": "toList",
+    "signature": "Iter.toList<A>(xs : Iter<A>) : List.List<A>"
+  },
+  {
+    "from": "Array",
+    "to": "List",
+    "module": "List",
+    "name": "fromArray",
+    "signature": "List.fromArray<T>(xs : [T]) : List<T>"
+  },
+  {
+    "from": "VarArray",
+    "to": "List",
+    "module": "List",
+    "name": "fromVarArray",
+    "signature": "List.fromVarArray<T>(xs : [var T]) : List<T>"
+  },
+  {
+    "from": "List",
+    "to": "Array",
+    "module": "List",
+    "name": "toArray",
+    "signature": "List.toArray<T>(xs : List<T>) : [T]"
+  },
+  {
+    "from": "List",
+    "to": "VarArray",
+    "module": "List",
+    "name": "toVarArray",
+    "signature": "List.toVarArray<T>(xs : List<T>) : [var T]"
+  },
+  {
+    "from": "List",
+    "to": "Iter",
+    "module": "List",
+    "name": "toIter",
+    "signature": "List.toIter<T>(xs : List<T>) : Iter.Iter<T>"
+  },
+  {
+    "from": "Nat",
+    "to": "Text",
+    "module": "Nat",
+    "name": "toText",
+    "signature": "Nat.toText(n : Nat) : Text"
+  },
+  {
+    "from": "Text",
+    "to": "Nat",
+    "module": "Nat",
+    "name": "fromText",
+    "signature": "Nat.fromText(text : Text) : ?Nat"
+  },
+  {
+    "from": "Nat16",
+    "to": "Text",
+    "module": "Nat16",
+    "name": "toText",
+    "signature": "Nat16.toText(x : Nat16) : Text"
+  },
+  {
+    "from": "Nat32",
+    "to": "Text",
+    "module": "Nat32",
+    "name": "toText",
+    "signature": "Nat32.toText(x : Nat32) : Text"
+  },
+  {
+    "from": "Nat64",
+    "to": "Text",
+    "module": "Nat64",
+    "name": "toText",
+    "signature": "Nat64.toText(x : Nat64) : Text"
+  },
+  {
+    "from": "Nat8",
+    "to": "Text",
+    "module": "Nat8",
+    "name": "toText",
+    "signature": "Nat8.toText(x : Nat8) : Text"
+  },
+  {
+    "from": "Actor",
+    "to": "Principal",
+    "module": "Principal",
+    "name": "fromActor",
+    "signature": "Principal.fromActor(a : actor {  }) : Principal"
+  },
+  {
+    "from": "Principal",
+    "to": "Blob",
+    "module": "Principal",
+    "name": "toBlob",
+    "signature": "Principal.toBlob(p : Principal) : Blob"
+  },
+  {
+    "from": "Blob",
+    "to": "Principal",
+    "module": "Principal",
+    "name": "fromBlob",
+    "signature": "Principal.fromBlob(b : Blob) : Principal"
+  },
+  {
+    "from": "Principal",
+    "to": "Text",
+    "module": "Principal",
+    "name": "toText",
+    "signature": "Principal.toText(p : Principal) : Text"
+  },
+  {
+    "from": "Text",
+    "to": "Principal",
+    "module": "Principal",
+    "name": "fromText",
+    "signature": "Principal.fromText(t : Text) : Principal"
+  },
+  {
+    "from": "Option",
+    "to": "Result",
+    "module": "Result",
+    "name": "fromOption",
+    "signature": "Result.fromOption<R, E>(x : ?R, err : E) : Result<R, E>"
+  },
+  {
+    "from": "Result",
+    "to": "Option",
+    "module": "Result",
+    "name": "toOption",
+    "signature": "Result.toOption<R, E>(r : Result<R, E>) : ?R"
+  },
+  {
+    "from": "Text",
+    "to": "Iter",
+    "module": "Text",
+    "name": "toIter",
+    "signature": "Text.toIter(t : Text) : Iter.Iter<Char>"
+  },
+  {
+    "from": "Text",
+    "to": "Array",
+    "module": "Text",
+    "name": "toArray",
+    "signature": "Text.toArray(t : Text) : [Char]"
+  },
+  {
+    "from": "Text",
+    "to": "VarArray",
+    "module": "Text",
+    "name": "toVarArray",
+    "signature": "Text.toVarArray(t : Text) : [var Char]"
+  },
+  {
+    "from": "Iter",
+    "to": "Text",
+    "module": "Text",
+    "name": "fromIter",
+    "signature": "Text.fromIter(cs : Iter.Iter<Char>) : Text"
+  },
+  {
+    "from": "List",
+    "to": "Trie",
+    "module": "Trie",
+    "name": "fromList",
+    "signature": "Trie.fromList<K, V>(kvc : ?Nat, kvs : AssocList<Key<K>, V>, bitpos : Nat) : Trie<K, V>"
+  },
+  {
+    "from": "Trie",
+    "to": "Array",
+    "module": "Trie",
+    "name": "toArray",
+    "signature": "Trie.toArray<K, V, W>(t : Trie<K, V>, f : (K, V) -> W) : [W]"
+  },
+  {
+    "from": "Entries",
+    "to": "TrieMap",
+    "module": "TrieMap",
+    "name": "fromEntries",
+    "signature": "TrieMap.fromEntries<K, V>(entries : I.Iter<(K, V)>, keyEq : (K, K) -> Bool, keyHash : K -> Hash.Hash) : TrieMap<K, V>"
+  },
+  {
+    "from": "Array",
+    "to": "TrieSet",
+    "module": "TrieSet",
+    "name": "fromArray",
+    "signature": "TrieSet.fromArray<T>(arr : [T], elemHash : T -> Hash, eq : (T, T) -> Bool) : Set<T>"
+  },
+  {
+    "from": "TrieSet",
+    "to": "Array",
+    "module": "TrieSet",
+    "name": "toArray",
+    "signature": "TrieSet.toArray<T>(s : Set<T>) : [T]"
+  }
+]
