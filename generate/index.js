@@ -5,6 +5,7 @@ const baseDocsDir = path.join(__dirname, '../submodules/motoko/doc/md/base');
 
 fs.readdirSync(baseDocsDir).forEach((file) => {
   if (file.endsWith('.md')) {
+    const moduleName = path.basename(file, '.md');
     const content = fs.readFileSync(path.join(baseDocsDir, file), 'utf8');
     const functions = [];
     const functionRegex =
@@ -16,7 +17,7 @@ fs.readdirSync(baseDocsDir).forEach((file) => {
 
       functionDefinition = functionDefinition.replace(/^\s*/i, '');
       functions.push({
-        module: path.basename(file, '.md'),
+        module: moduleName,
         name: functionName,
         definition: functionDefinition,
       });
@@ -24,9 +25,24 @@ fs.readdirSync(baseDocsDir).forEach((file) => {
 
     const relevant = functions.flatMap((f) => {
       const match = /(from|to)(\w+)/.exec(f.name);
-      return match ? [[{ ...f, type: match[1], other: match[2] }]] : [];
+      return match ? [{ ...f, type: match[1], other: match[2] }] : [];
     });
 
-    console.log(relevant);
+    console.log(moduleName, relevant);
+
+    const convertModule = fs
+      .readFileSync(path.join(__dirname, 'ConvertTemplate.mo'), 'utf8')
+      .replace('/* {imports} */', '// TODO: imports')
+      .replace(/([ \t]*)\/\* {fields} \*\//, (_, indent) => {
+        return relevant
+          .map((f) => {
+            const from = f.type === 'from' ? f.other : f.module;
+            const to = f.type === 'to' ? f.module : f.other;
+            return `${indent}public func ${from}_${to}(from : ${from}) = ${f.module}.${f.name}(from);`;
+          })
+          .join('\n');
+      });
+
+    fs.writeFileSync(path.join(__dirname, '../src/lib.mo'), convertModule);
   }
 });
