@@ -1,4 +1,4 @@
-# `mo-convert`
+# `mo-convert` &nbsp;[![npm version](https://img.shields.io/npm/v/mo-convert.svg?logo=npm)](https://www.npmjs.com/package/mo-convert) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/rvanasa/mo-convert/issues)
 
 > ### Systematic [Motoko](https://github.com/dfinity/motoko) base library type conversions.
 
