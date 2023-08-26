@@ -3,8 +3,9 @@
   "version": "0.0.1",
   "license": "MIT",
   "scripts": {
-    "generate": "git submodule update && node ./generate && npm run format:mo",
-    "format:mo": "prettier --write \"src/**/*.{mo,json}\"",
+    "test": "mops test",
+    "generate": "git submodule update && node ./generate && npm run format",
+    "format": "prettier --write \"src/**/*.{mo,json}\"",
     "postinstall": "mops install"
   },
   "devDependencies": {
