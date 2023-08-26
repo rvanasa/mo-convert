@@ -6,7 +6,8 @@
     "test": "mops test",
     "generate": "git submodule update && node ./generate && npm run format",
     "format": "prettier --write \"src/**/*.{mo,json}\"",
-    "postinstall": "mops install"
+    "postinstall": "mops install",
+    "prepublish": "npm test"
   },
   "devDependencies": {
     "ic-mops": "^0.26.2",
