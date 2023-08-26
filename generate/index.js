@@ -70,10 +70,17 @@ const motokoSource = fs
       .map((f) => {
         const from = f.type === 'from' ? f.other : f.module;
         const to = f.type === 'from' ? f.module : f.other;
-        // const signature = /\w+(.+)/.exec(f.signature)[1];
-        return `${indent}public let ${from}_${to} = ${f.module}.${f.name};`;
+        const lines = [
+          '/// From base library:',
+          '/// ```motoko no-repl',
+          `/// import ${f.module} "mo:base/${f.module}";`,
+          `/// ${f.module}.${f.signature}`,
+          '/// ```',
+          `public let ${from}_${to} = ${f.module}.${f.name};`,
+        ];
+        return lines.map((line) => `${indent}${line}`).join('\n');
       })
       .sort()
-      .join('\n');
+      .join('\n\n');
   });
 fs.writeFileSync(path.join(__dirname, '../src/lib.mo'), motokoSource);
