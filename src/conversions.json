@@ -233,14 +233,6 @@
   },
   {
     "from": "List",
-    "to": "Iter",
-    "module": "Iter",
-    "name": "fromList",
-    "signature": "Iter.fromList",
-    "prim": null
-  },
-  {
-    "from": "List",
     "to": "Trie",
     "module": "Trie",
     "name": "fromList",
@@ -606,14 +598,6 @@
     "name": "toText",
     "signature": "Buffer.toText<X>(buffer : Buffer<X>, toText : X -> Text) : Text",
     "prim": null
-  },
-  {
-    "from": "Char",
-    "to": "Text",
-    "module": "Char",
-    "name": "toText",
-    "signature": "Char.toText : (c : Char) -> Text",
-    "prim": "charToText"
   },
   {
     "from": "Float",

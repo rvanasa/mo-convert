@@ -3,6 +3,8 @@
 const path = require('path');
 const fs = require('fs');
 
+const skipFunctions = ['Iter.fromList', 'Char.toText'];
+
 // Find conversion functions in base library docs
 const baseDocsDir = path.join(__dirname, '../submodules/motoko/doc/md/base');
 const convertFunctions = [];
@@ -17,11 +19,13 @@ fs.readdirSync(baseDocsDir).forEach((file) => {
     while ((match = functionRegex.exec(content)) !== null) {
       const name = match[1].trim();
       const signature = match[2].trim();
-      functions.push({
-        module: moduleName,
-        name,
-        signature,
-      });
+      if (!skipFunctions.includes(`${moduleName}.${name}`)) {
+        functions.push({
+          module: moduleName,
+          name,
+          signature,
+        });
+      }
     }
     const relevant = functions.flatMap((f) => {
       const match = /^(from|to)([A-Z]\w*)/.exec(f.name);

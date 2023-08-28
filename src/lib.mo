@@ -116,13 +116,6 @@ module Convert {
 
   /// From base library:
   /// ```motoko no-repl
-  /// import Char "mo:base/Char";
-  /// Char.Char.toText : (c : Char) -> Text
-  /// ```
-  public let Char_Text = Prim.charToText;
-
-  /// From base library:
-  /// ```motoko no-repl
   /// import Float "mo:base/Float";
   /// Float.Float.fromInt : Int -> Float
   /// ```
@@ -358,13 +351,6 @@ module Convert {
   /// Iter.Iter.fromArrayMut<A>(xs : [var A]) : Iter<A>
   /// ```
   public let ArrayMut_Iter = Iter.fromArrayMut;
-
-  /// From base library:
-  /// ```motoko no-repl
-  /// import Iter "mo:base/Iter";
-  /// Iter.Iter.fromList
-  /// ```
-  public let List_Iter = Iter.fromList;
 
   /// From base library:
   /// ```motoko no-repl
