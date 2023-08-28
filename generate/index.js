@@ -75,6 +75,10 @@ fs.writeFileSync(
   `${JSON.stringify(json, null, 2)}\n`,
 );
 
+const moduleGroups = [...new Set(json.map((f) => f.to))]
+  .sort()
+  .map((to) => [to, json.filter((f) => f.to === to)]);
+
 // Generate `/src/lib.mo`
 const motokoSource = fs
   .readFileSync(path.join(__dirname, 'Template.mo'), 'utf8')
@@ -82,24 +86,32 @@ const motokoSource = fs
     '/* {imports} */',
     [...new Set(json.filter((f) => !f.prim).map((f) => f.module))]
       .sort()
-      .map((module) => `import ${module} "mo:base/${module}";`)
+      .map((module) => `import ${module}_ "mo:base/${module}";`)
       .join('\n'),
   )
   .replace(/([ \t]*)\/\* {fields} \*\//, (_, indent) => {
-    return json
-      .map((f) => {
-        const lines = [
-          '/// From base library:',
-          '/// ```motoko no-repl',
-          `/// import ${f.module} "mo:base/${f.module}";`,
-          `/// ${f.module}.${f.signature}`,
-          '/// ```',
-          `public let ${f.from}_${f.to} = ${
-            f.prim ? `Prim.${f.prim}` : `${f.module}.${f.name}`
-          };`,
-        ];
-        return lines.map((line) => `${indent}${line}`).join('\n');
-      })
+    return moduleGroups
+      .map(([to, froms]) =>
+        [
+          `/// Conversions to the \`${to}\` type.`,
+          `public module ${to} {`,
+          ...froms.flatMap((f) =>
+            [
+              '/// From base library:',
+              '/// ```motoko no-repl',
+              `/// import ${f.module} "mo:base/${f.module}";`,
+              `/// ${f.module}.${f.signature}`,
+              '/// ```',
+              `public let of${f.from} = ${
+                f.prim ? `Prim.${f.prim}` : `${f.module}_.${f.name}`
+              };`,
+            ].map((line) => `${indent}${line}`),
+          ),
+          '};',
+        ]
+          .map((line) => `${indent}${indent}${line}`)
+          .join('\n'),
+      )
       .sort()
       .join('\n\n');
   });
