@@ -70,5 +70,5 @@ conversions[0] ==
   name: "fromArray",
   signature: "Blob.fromArray(bytes : [Nat8]) : Blob",
   prim: "arrayToBlob",
-},
+}
 ```
