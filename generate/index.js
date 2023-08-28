@@ -57,7 +57,6 @@ const json = convertFunctions.map((f) => {
   const prim =
     findPrim(`${lowercaseFirstLetter(from)}To${to}`) ||
     findPrim(`${lowercaseFirstLetter(to)}Of${from}`);
-  console.log(f.module, f.name, '::', prim); //////
   return {
     from,
     to,
@@ -77,23 +76,21 @@ const motokoSource = fs
   .readFileSync(path.join(__dirname, 'Template.mo'), 'utf8')
   .replace(
     '/* {imports} */',
-    [...new Set(convertFunctions.filter((f) => !f.prim).map((f) => f.module))]
+    [...new Set(json.filter((f) => !f.prim).map((f) => f.module))]
       .sort()
       .map((module) => `import ${module} "mo:base/${module}";`)
       .join('\n'),
   )
   .replace(/([ \t]*)\/\* {fields} \*\//, (_, indent) => {
-    return convertFunctions
+    return json
       .map((f) => {
-        const from = f.type === 'from' ? f.other : f.module;
-        const to = f.type === 'from' ? f.module : f.other;
         const lines = [
           '/// From base library:',
           '/// ```motoko no-repl',
           `/// import ${f.module} "mo:base/${f.module}";`,
           `/// ${f.module}.${f.signature}`,
           '/// ```',
-          `public let ${from}_${to} = ${
+          `public let ${f.from}_${f.to} = ${
             f.prim ? `Prim.${f.prim}` : `${f.module}.${f.name}`
           };`,
         ];
