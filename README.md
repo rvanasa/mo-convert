@@ -68,6 +68,7 @@ conversions[0] ==
   to: "Blob",
   module: "Blob",
   name: "fromArray",
-  signature: "Blob.fromArray(bytes : [Nat8]) : Blob"
+  signature: "Blob.fromArray(bytes : [Nat8]) : Blob",
+  prim: "arrayToBlob",
 },
 ```
