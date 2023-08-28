@@ -72,7 +72,7 @@ const json = convertFunctions.map((f) => {
 });
 fs.writeFileSync(
   path.join(__dirname, '../src/conversions.json'),
-  JSON.stringify(json, null, 2),
+  `${JSON.stringify(json, null, 2)}\n`,
 );
 
 // Generate `/src/lib.mo`
