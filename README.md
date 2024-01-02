@@ -5,7 +5,7 @@
 ---
 
 This repository includes Motoko source code and a JSON metadata file containing all base library type conversions
-with a consistent `From_To()` naming convention. `mo-convert` is intended as a stepping stone for community
+with a consistent `B.ofA : A -> B` naming convention. `mo-convert` is intended as a stepping stone for community
 language tooling and for those such as myself who have trouble remembering whether the function was named `Array.toBuffer()` or `Buffer.fromArray()`.
 
 ## Quick Start (Motoko):
@@ -27,19 +27,19 @@ Go to town:
 
 ```motoko
 let nat = 123;
-let text = C.Nat_Text(nat); // => "123"
+let text = C.Text.ofNat(nat); // => "123"
 
-let option = C.Result_Option(#ok true); // => ?true
+let option = C.Option.ofResult(#ok true); // => ?true
 
 let array = [1, 2, 3];
-let buffer = C.Array_Buffer<Nat>(array);
+let buffer = C.Buffer.ofArray<Nat>(array);
 
 // Chain conversions with the piping operator
 let pipe = (
   array
-  |> C.Array_Iter _
-  |> C.Iter_List _
-  |> C.List_Array _
+  |> C.Iter.ofArray _
+  |> C.List.ofIter _
+  |> C.Array.ofList _
 );
 ```
 
