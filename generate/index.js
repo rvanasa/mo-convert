@@ -77,7 +77,7 @@ fs.writeFileSync(
 
 const moduleGroups = [...new Set(json.map((f) => f.to))]
   .sort()
-  .map((to) => [to, json.filter((f) => f.to === to)]);
+  .map((module) => [module, json.filter((f) => f.to === module), json.filter((f) => f.from === module)]);
 
 // Generate `/src/lib.mo`
 const motokoSource = fs
@@ -91,18 +91,30 @@ const motokoSource = fs
   )
   .replace(/([ \t]*)\/\* {fields} \*\//, (_, indent) => {
     return moduleGroups
-      .map(([to, froms]) =>
+      .map(([module, froms, tos]) =>
         [
-          `/// Conversions to the \`${to}\` type.`,
-          `public module ${to} {`,
+          `/// Conversions to the \`${module}\` type.`,
+          `public module ${module} {`,
           ...froms.flatMap((f) =>
             [
               '/// From base library:',
               '/// ```motoko no-repl',
               `/// import ${f.module} "mo:base/${f.module}";`,
-              `/// ${f.module}.${f.signature}`,
+              `/// ${f.signature}`,
               '/// ```',
-              `public let of${f.from} = ${
+              `public let from${f.from} = ${
+                f.prim ? `Prim.${f.prim}` : `${f.module}_.${f.name}`
+              };`,
+            ].map((line) => `${indent}${line}`),
+          ),
+          ...tos.flatMap((f) =>
+            [
+              '/// From base library:',
+              '/// ```motoko no-repl',
+              `/// import ${f.module} "mo:base/${f.module}";`,
+              `/// ${f.signature}`,
+              '/// ```',
+              `public let to${f.to} = ${
                 f.prim ? `Prim.${f.prim}` : `${f.module}_.${f.name}`
               };`,
             ].map((line) => `${indent}${line}`),
