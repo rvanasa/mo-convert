@@ -5,7 +5,7 @@
 ---
 
 This repository includes Motoko source code and a JSON metadata file containing all base library type conversions
-with a consistent `B.fromA : A -> B` naming convention. `mo-convert` is intended as a stepping stone for community
+with consistent `B.fromA : A -> B` and `A.fromB : B -> A` signatures. `mo-convert` is intended as a stepping stone for community
 language tooling and for those such as myself who have trouble remembering whether the function was named `Array.toBuffer()` or `Buffer.fromArray()`.
 
 ## Quick Start (Motoko):
